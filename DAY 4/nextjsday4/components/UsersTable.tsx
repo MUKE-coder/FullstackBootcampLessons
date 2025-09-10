@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Table,
   TableBody,
@@ -8,9 +10,79 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useUsersData } from "@/hooks/use-users";
 import { User } from "@/types/user.schema";
 
-export function UsersTable({ users }: { users: User[] }) {
+const car = {
+  name: "Something",
+  color: "red",
+  made: "Jeep",
+};
+
+export function UsersTable() {
+  const { data: users = [], isLoading, error } = useUsersData();
+  // console.log(users);
+
+  if (isLoading) {
+    return (
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[100px]">Image</TableHead>
+            <TableHead>Name</TableHead>
+            <TableHead>Email</TableHead>
+            <TableHead>Phone</TableHead>
+            <TableHead>Created At</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow className="w-full">
+            <p className="p-4 ">Loading Users...</p>
+          </TableRow>
+        </TableBody>
+      </Table>
+    );
+  }
+  if (error) {
+    return (
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[100px]">Image</TableHead>
+            <TableHead>Name</TableHead>
+            <TableHead>Email</TableHead>
+            <TableHead>Phone</TableHead>
+            <TableHead>Created At</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <p className="py-4 text-red-600">{error.message}</p>
+        </TableBody>
+      </Table>
+    );
+  }
+  if (!users) {
+    return <p>Something went wrong</p>;
+  }
+  if (users.length === 0) {
+    return (
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[100px]">Image</TableHead>
+            <TableHead>Name</TableHead>
+            <TableHead>Email</TableHead>
+            <TableHead>Phone</TableHead>
+            <TableHead>Created At</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <p className="py-4">No Users Data Found</p>
+        </TableBody>
+      </Table>
+    );
+  }
+
   return (
     <div className="">
       <h2 className="py-3 pb-4 text-2xl font-semibold">List of All Users</h2>

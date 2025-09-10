@@ -1,6 +1,5 @@
 import ProductListing from "@/components/ProductListing";
 import UsersListing from "@/components/UsersListing";
-import Image from "next/image";
 
 export default function Home() {
   return (
